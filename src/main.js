@@ -30,7 +30,6 @@ async function init() {
     canvas = document.getElementById('game-canvas');
     ctx = canvas.getContext('2d');
     
-    // Load sprites
     try {
         dinoFrames = await SpriteLoader.loadAndExtractSprites();
     } catch (err) {
@@ -60,7 +59,6 @@ async function init() {
     );
     detector.start();
     
-    // Input Handling
     window.addEventListener('keydown', (e) => {
         if (e.code === 'Space' || e.code === 'ArrowUp') {
             e.preventDefault();
@@ -85,7 +83,6 @@ async function init() {
     });
 
     document.addEventListener('mousedown', (e) => {
-        // Only trigger on canvas or container clicks, not on PIP
         if (e.target.closest('#pip-container')) return;
         
         if (state === 'waiting') {
@@ -95,9 +92,8 @@ async function init() {
         } else if (state === 'dead') {
             actionRestart = true;
         } else if (state === 'playing') {
-            // allows mouse jump
             actionJump = true;
-            kbJumpHeld = true; // treat mouse hold same as space hold initially
+            kbJumpHeld = true;
         }
     });
 
@@ -105,7 +101,6 @@ async function init() {
         kbJumpHeld = false;
     });
 
-    // Start gameloop
     requestAnimationFrame(gameLoop);
 }
 
@@ -123,17 +118,13 @@ const frameDuration = 1000 / 60;
 function gameLoop(timestamp) {
     if (!timestamp) timestamp = performance.now();
     
-    // Request next frame immediately
     requestAnimationFrame(gameLoop);
-    
-    // Cap at 60 FPS
     const deltaTime = timestamp - lastTime;
     if (deltaTime < frameDuration - 1) {
         return;
     }
     lastTime = timestamp - (deltaTime % frameDuration);
 
-    // MediaPipe Hands Pinch state
     const currPinch = detector.isPinching();
     const pinchRose = currPinch && !prevPinch;
     prevPinch = currPinch;
@@ -172,7 +163,6 @@ function gameLoop(timestamp) {
             dino.jump();
         }
         
-        // Dynamic boost holding
         const jumpHeld = (currPinch || kbJumpHeld) && !dino.on_ground;
         dino.update(jumpHeld);
         
@@ -180,14 +170,12 @@ function gameLoop(timestamp) {
         clouds.update(speed);
         obstacles.update(speed);
 
-        // Transition Day/Night cycle
         const newNightMode = Math.floor(scoreTracker.score / DAY_CYCLE_SCORE) % 2 === 1;
         if (newNightMode !== nightMode) {
             nightMode = newNightMode;
             document.body.classList.toggle('night-mode', nightMode);
         }
 
-        // Collision logic
         if (obstacles.checkCollision(dino.getRect())) {
             dino.dead = true;
             state = 'dead';
@@ -210,10 +198,8 @@ function gameLoop(timestamp) {
     
     actionJump = false;
 
-    // Render pass
     ctx.clearRect(0, 0, SCREEN_W, SCREEN_H);
     
-    // Background rendered via CSS
     if (state !== 'waiting') {
         clouds.draw(ctx);
         ground.draw(ctx);
