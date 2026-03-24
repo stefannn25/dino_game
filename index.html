@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dino Run - Hand Gesture Edition</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div id="game-container">
         <canvas id="game-canvas" width="1100" height="600"></canvas>
@@ -20,12 +24,12 @@
                 </div>
                 <div id="speed-label">SPEED 8.0</div>
             </div>
-            
+
             <div id="score-display">
                 <span id="hi-score">HI 00000</span>
                 <span id="current-score">00000</span>
             </div>
-            
+
             <div id="start-screen" class="screen overlay">
                 <h1>DINO RUN</h1>
                 <h2 class="accent-text">HAND GESTURE EDITION</h2>
@@ -33,7 +37,7 @@
                 <p>or press SPACE</p>
                 <p class="small-text">Point your webcam at your hand &middot; Click to start</p>
             </div>
-            
+
             <div id="game-over-screen" class="screen overlay hidden">
                 <h1>G A M E &nbsp; O V E R</h1>
                 <p>Pinch or press SPACE to restart</p>
@@ -48,4 +52,5 @@
     </div>
     <script type="module" src="src/main.js"></script>
 </body>
+
 </html>
