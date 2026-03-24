@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dino Run - Hand Gesture Edition</title>
     <link rel="stylesheet" href="style.css">
-    <!-- MediaPipe Hands CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
@@ -13,10 +12,7 @@
 </head>
 <body>
     <div id="game-container">
-        <!-- Main Game Canvas -->
         <canvas id="game-canvas" width="1100" height="600"></canvas>
-        
-        <!-- Score and UI Overlays -->
         <div id="ui-layer">
             <div id="speed-meter">
                 <div id="speed-bar-bg">
@@ -44,17 +40,12 @@
             </div>
         </div>
 
-        <!-- PIP Webcam Feed (Corner) -->
         <div id="pip-container">
-            <!-- Hidden video element for MediaPipe -->
             <video id="webcam-video" style="display: none;" autoplay muted playsinline></video>
-            <!-- Canvas to draw webcam stream and hand landmarks -->
             <canvas id="webcam-canvas" width="280" height="210"></canvas>
             <div id="pip-label">Open hand | Pinch to jump</div>
         </div>
     </div>
-    
-    <!-- Game Modules -->
     <script type="module" src="src/main.js"></script>
 </body>
 </html>
