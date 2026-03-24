@@ -1,0 +1,215 @@
+/* Basic CSS reset and global styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: #f7f7f7; /* BG_DAY */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Consolas', monospace; /* Keep original font style */
+    overflow: hidden;
+    transition: background-color 0.3s ease;
+}
+
+body.night-mode {
+    background-color: #1e1e32; /* BG_NIGHT */
+}
+
+#game-container {
+    position: relative;
+    width: 1100px;
+    height: 600px;
+    background-color: transparent; /* Rendered by Canvas instead */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+body.night-mode #game-container {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* UI Overlays */
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Let clicks pass through to canvas if needed */
+}
+
+/* Speed Meter */
+#speed-meter {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+}
+
+#speed-bar-bg {
+    width: 160px;
+    height: 12px;
+    background-color: #d2d2d2;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+body.night-mode #speed-bar-bg {
+    background-color: #3c3c3c;
+}
+
+#speed-bar-fill {
+    width: 0%;
+    height: 100%;
+    background-color: #538f53; /* ACCENT */
+    border-radius: 6px;
+    transition: width 0.1s linear;
+}
+
+#speed-label {
+    margin-top: 3px;
+    font-size: 13px;
+    color: #535353; /* TEXT_DARK */
+}
+
+body.night-mode #speed-label {
+    color: #c8c8c8; /* TEXT_LIGHT */
+}
+
+/* Score Display */
+#score-display {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#current-score {
+    color: #535353;
+    margin-left: 36px;
+}
+
+#hi-score {
+    color: #969696;
+}
+
+body.night-mode #current-score {
+    color: #c8c8c8;
+}
+
+body.night-mode #hi-score {
+    color: #7878a0;
+}
+
+/* Overlay Screens */
+.screen {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#start-screen h1 {
+    font-size: 62px;
+    font-weight: bold;
+    color: #535353;
+    margin-top: 160px;
+}
+
+#start-screen h2.accent-text {
+    font-size: 26px;
+    color: #538f53;
+    margin-top: -6px;
+    margin-bottom: 46px;
+}
+
+#start-screen p {
+    font-size: 22px;
+    color: #535353;
+    line-height: 1.6;
+}
+
+#start-screen p.small-text {
+    font-size: 16px;
+    color: #969696;
+    margin-top: 40px;
+}
+
+body.night-mode #start-screen h1,
+body.night-mode #start-screen p {
+    color: #c8c8c8;
+}
+
+body.night-mode #start-screen p.small-text {
+    color: #7878a0;
+}
+
+#game-over-screen {
+    color: #535353;
+}
+
+#game-over-screen h1 {
+    font-size: 62px;
+    font-weight: bold;
+    margin-top: 210px;
+    letter-spacing: 2px;
+}
+
+#game-over-screen p {
+    font-size: 22px;
+    margin-top: -10px;
+}
+
+body.night-mode #game-over-screen {
+    color: #c8c8c8;
+}
+
+/* Picture in Picture (PIP) */
+#pip-container {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 286px; /* PIP_W + borders */
+    display: flex;
+    flex-direction: column;
+}
+
+#webcam-canvas {
+    width: 280px;
+    height: 210px;
+    background-color: #000;
+    border: 3px solid #64c878;
+    border-radius: 6px;
+}
+
+body.night-mode #webcam-canvas {
+    border-color: #3c8c5a;
+}
+
+#pip-label {
+    margin-top: 4px;
+    font-size: 13px;
+    color: #64c878;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+body.night-mode #pip-label {
+    color: #3c8c5a;
+}
