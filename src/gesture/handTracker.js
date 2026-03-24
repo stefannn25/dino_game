@@ -57,11 +57,9 @@ export class GestureDetector {
         this.ctx.save();
         this.ctx.clearRect(0, 0, this.width, this.height);
 
-        // Mirror the canvas for drawing
         this.ctx.translate(this.width, 0);
         this.ctx.scale(-1, 1);
 
-        // Draw the main video frame mirrored
         this.ctx.drawImage(results.image, 0, 0, this.width, this.height);
 
         this.pinching = false;
@@ -69,10 +67,8 @@ export class GestureDetector {
         if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
             const lms = results.multiHandLandmarks[0];
 
-            // Draw connections using MediaPipe drawing utils
             drawConnectors(this.ctx, lms, HAND_CONNECTIONS, { color: '#c8c8c8', lineWidth: 1 });
 
-            // Draw landmark points
             for (let i = 0; i < lms.length; i++) {
                 const landmark = lms[i];
                 const x = landmark.x * this.width;
@@ -89,28 +85,23 @@ export class GestureDetector {
                 this.ctx.stroke();
             }
 
-            // Helper functions to get scaled pixel coordinates
             const px = (idx) => lms[idx].x * this.width;
             const py = (idx) => lms[idx].y * this.height;
             const dist = (i1, i2) => Math.hypot(px(i1) - px(i2), py(i1) - py(i2));
 
-            const pinchDist = dist(4, 8); // thumb tip to index tip
-            const handSize = dist(0, 9) + 1e-6; // wrist to mid-mcp
+            const pinchDist = dist(4, 8);
+            const handSize = dist(0, 9) + 1e-6; 
             const ratio = pinchDist / handSize;
 
             this.pinching = ratio < PINCH_RATIO_THRESHOLD;
 
-            // Annotations (circle and text) have to be drawn un-mirrored so text is readable
             const cx_mirrored = (px(4) + px(8)) / 2;
             const cy = (py(4) + py(8)) / 2;
 
-            const color = this.pinching ? '#50ff00' : '#ffa000'; // Green vs Orange
-
-            // Un-mirror the context for drawing text and indicator circle properly
-            this.ctx.restore(); // Restore to un-mirrored state
+            const color = this.pinching ? '#50ff00' : '#ffa000'; 
+            this.ctx.restore(); 
             this.ctx.save();
 
-            // Need to flip the X coordinate back to un-mirrored space
             const cx = this.width - cx_mirrored;
 
             this.ctx.beginPath();
@@ -124,12 +115,10 @@ export class GestureDetector {
             const label = this.pinching ? 'PINCH!' : ratio.toFixed(2);
             this.ctx.fillText(label, cx + 16, cy + 6);
         } else {
-            // Un-mirror the context if no hands are found
             this.ctx.restore();
             this.ctx.save();
         }
 
-        // Status indicator top bar
         const statusColor = this.pinching ? '#3cc83c' : '#282828';
         this.ctx.fillStyle = statusColor;
         this.ctx.fillRect(0, 0, this.width, 22);
